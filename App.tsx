@@ -1,93 +1,42 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { FlatList, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
-import ImageViewer from './components/Image';
-import Button from './components/Button';
-import { moon } from './base/colors';
+import { ColorType, dawn, moon } from './base/colors';
 import { ThemeContext } from './ThemeContext';
-import { launchImageLibraryAsync } from 'expo-image-picker';
+import Main from './Main';
+import { StyleSheet, View } from 'react-native';
+import IconButton from './components/IconButton';
+import { useState } from 'react';
+
+type IconThemeType = "dark-mode" | "light-mode"
 
 export default function App() {
-    const [images, setImages] = useState<ImageSourcePropType[]>([])
+    const [theme, setTheme] = useState<ColorType>(moon)
+    const [themeIcon, setThemeIcon] = useState<IconThemeType>('dark-mode')
 
-    const pickImageAsync = async () => {
-        let result = await launchImageLibraryAsync({
-            allowsEditing: true,
-            quality: 1,
-        })
-
-        if (!result.canceled) {
-            const uri = result.assets[0].uri
-            const newImages = images
-
-            newImages.push({ uri })
-
-            setImages(newImages)
-        }
-    }
-
-    if (images.length <= 0) {
-        return (
-            <ThemeContext.Provider value={{ theme: moon }}>
-                <View style={styles.container}>
-                    <View style={styles.imagesContainer}>
-                        <Text style={[styles.text, styles.image]}>You do not have any images yet !</Text>
-                    </View>
-                    <View style={styles.footerContainer}>
-                        <Button label="Choose a picture" iconName="image-search" onPress={pickImageAsync} />
-                    </View>
-                    <StatusBar style="auto" />
-                </View>
-            </ThemeContext.Provider >
-        )
+    const switchTheme = () => {
+        setTheme(theme.name === 'moon' ? dawn : moon)
+        setThemeIcon(theme.name === 'moon' ? 'dark-mode' : 'light-mode')
     }
 
     return (
-        <ThemeContext.Provider value={{ theme: moon }}>
-            <View style={styles.container}>
-                <View style={styles.imagesContainer}>
-                    <FlatList
-                        data={images}
-                        renderItem={({ item: image }) => <ImageViewer source={image} />}
-                    />
-                </View>
-                <View style={styles.footerContainer}>
-                    <Button label="Choose a picture" iconName="image-search" onPress={pickImageAsync} />
-                </View>
-                <StatusBar style="auto" />
+        <ThemeContext.Provider value={{ theme: theme }}>
+            <View style={[styles.menuContainer, { backgroundColor: theme.base }]}>
+                <IconButton
+                    iconName={themeIcon}
+                    onPress={switchTheme}
+                />
             </View>
-        </ThemeContext.Provider>
-    );
+            <Main />
+            <StatusBar style="auto" />
+        </ThemeContext.Provider >
+    )
 }
 
-const theme = moon
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: theme.base,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    imagesContainer: {
-        flex: 1,
+    menuContainer: {
+        width: '100%',
         paddingTop: 50,
-        alignItems: 'center',
+        paddingRight: 50,
+        alignItems: 'flex-end',
         justifyContent: 'center',
-    },
-    image: {
-        width: 320,
-        height: 440,
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: theme.subtle,
-    },
-    text: {
-        color: theme.text,
-        verticalAlign: 'middle',
-        textAlign: 'center',
-    },
-    footerContainer: {
-        flex: 1 / 3,
-        alignItems: 'center'
     },
 });

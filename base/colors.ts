@@ -1,4 +1,5 @@
 export type ColorType = {
+    name: string,
     base: string;
     surface: string;
     overlay: string;
@@ -18,6 +19,7 @@ export type ColorType = {
 
 // Rose Pine Moon
 export const moon: ColorType = {
+    name: 'moon',
     base: "#232136",
     surface: "#2a273f",
     overlay: "#393552",
@@ -37,6 +39,7 @@ export const moon: ColorType = {
 
 // Rose Pine Dawn
 export const dawn: ColorType = {
+    name: 'dawn',
     base: "#faf4ed",
     surface: "#fffaf3",
     overlay: "#f2e9e1",

@@ -2,7 +2,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useContext } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ThemeContext, ThemeContextType } from "../ThemeContext";
-import { ColorType } from "../base/colors";
 
 export type ButtonPropType = {
     label: string
@@ -13,15 +12,19 @@ export type ButtonPropType = {
 export default function Button({ label, iconName, onPress }: ButtonPropType) {
     const theme = useContext<ThemeContextType>(ThemeContext).theme
 
+    const viewStyle = iconName ? {
+        borderColor: theme.gold,
+        borderRadius: 10,
+        borderWidth: 1,
+    } : null
+
+    const buttonStyle = iconName ? { backgroundColor: theme.overlay } : null
+
     return (
-        <View style={[styles.buttonContainer, {
-            borderColor: theme.gold,
-            borderRadius: 10,
-            borderWidth: 1,
-        }]}>
+        <View style={[styles.buttonContainer, viewStyle]}>
             <Pressable
                 onPress={onPress}
-                style={[styles.button, { backgroundColor: theme.overlay }]}
+                style={[styles.button, buttonStyle]}
             >
                 {iconName &&
                     <MaterialIcons

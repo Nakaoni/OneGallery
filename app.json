@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "OneGallery",
-    "slug": "OneGallery"
+    "slug": "OneGallery",
+    "android":{"softwareKeyboardLayoutMode": "pan"}
   }
 }
