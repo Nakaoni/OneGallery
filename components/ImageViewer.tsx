@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { ImageSourcePropType } from "react-native"
 import { Image, StyleSheet } from "react-native"
-import { ThemeContext, ThemeContextType } from "../ThemeContext"
+import { ThemeContext, ThemeContextType } from "@contexts/ThemeContext"
 
 export type ImageViewerPropType = {
     source: ImageSourcePropType

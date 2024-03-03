@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useContext } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
-import { ThemeContext, ThemeContextType } from "../ThemeContext";
+import { ThemeContext, ThemeContextType } from "@contexts/ThemeContext";
 
 export type IconButtonPropType = {
     iconName: keyof typeof MaterialIcons.glyphMap,

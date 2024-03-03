@@ -1,5 +1,5 @@
 import { createContext } from "react"
-import { ColorType, moon } from "./base/colors"
+import { ColorType, moon } from "@base/colors"
 
 export type ThemeContextType = {
     theme: ColorType

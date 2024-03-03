@@ -1,18 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import { useContext, useState } from 'react';
-import { ImageSourcePropType, StyleSheet, Text, TextInput, View } from 'react-native';
-import ImageViewer from './components/ImageViewer';
-import Button from './components/Button';
-import { ThemeContext, ThemeContextType } from './ThemeContext';
+import { useContext, useRef, useState } from 'react';
+import { ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
+import ImageViewer from '@components/ImageViewer';
+import Button from '@components/Button';
+import { ThemeContext, ThemeContextType } from '@contexts/ThemeContext';
 import { launchImageLibraryAsync } from 'expo-image-picker';
-import IconButton from './components/IconButton';
-import Input from './components/Input';
+import IconButton from '@components/IconButton';
+import Input from '@components/Input';
+import { captureRef } from 'react-native-view-shot';
+import * as FileSystem from 'expo-file-system';
+import { RouterContext, RouterContextType } from '@contexts/RouterContext';
 
-export default function Main() {
+export default function PhotoManager() {
     const theme = useContext<ThemeContextType>(ThemeContext).theme
+    const router = useContext<RouterContextType>(RouterContext)
     const [image, setImage] = useState<ImageSourcePropType>(null)
     const [showOptions, setShowOptions] = useState<boolean>(false)
     const [photoName, setPhotoName] = useState<string>(null)
+    const imageRef = useRef()
 
     const pickImageAsync = async () => {
         let result = await launchImageLibraryAsync({
@@ -30,22 +35,49 @@ export default function Main() {
         setShowOptions(false)
     }
 
-    const onSaveImageAsync = () => {
+    /**
+     * @todo create directory for images
+     */
+    const onSaveImageAsync = async () => {
+        try {
+            const localUri = await captureRef(imageRef, {
+                height: 440,
+                quality: 1,
+            })
+
+            await FileSystem.copyAsync({
+                from: localUri,
+                to: FileSystem.documentDirectory + photoName
+            })
+
+            router.setRoute("photo-list")
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     return (
         <View style={[styles.container, { backgroundColor: theme.base }]}>
             <View style={styles.imagesContainer}>
                 {image ? (
-                    <ImageViewer source={image} />
+                    <View ref={imageRef} collapsable={false}>
+                        <ImageViewer source={image} />
+                    </View>
                 ) : (
-                    <Text style={[styles.text, styles.image, { borderColor: theme.subtle, color: theme.text }]}>You do not have any images yet !</Text>
+                    <Text
+                        style={[
+                            styles.text, styles.image,
+                            { borderColor: theme.subtle, color: theme.text }
+                        ]}
+                    >
+                        You do not choose any image yet !
+                    </Text>
                 )}
             </View>
             {showOptions ? (
                 <View style={[styles.footerContainer, { gap: 20 }]}>
                     <View style={styles.formContainer}>
-                        <Input label="Name" value={photoName} />
+                        <Input label="Name" value={photoName} onChangeText={setPhotoName} />
                     </View>
                     <View style={styles.optionsContainer}>
                         <IconButton
