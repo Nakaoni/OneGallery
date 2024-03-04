@@ -1,21 +1,30 @@
 import { useContext } from "react";
-import { StyleSheet, Text, TextInput } from "react-native";
+import { InputModeOptions, StyleSheet, Text, TextInput } from "react-native";
 import { ThemeContext, ThemeContextType } from "@contexts/ThemeContext";
 import { View } from "react-native";
 
 export type InputPropsType = {
     label: string,
     value?: string,
+    type?: InputModeOptions,
     onChangeText: (text: string) => void
 }
 
-export default function Input({ value, label, onChangeText }: InputPropsType) {
+export default function Input({ value, label, type, onChangeText }: InputPropsType) {
     const theme = useContext<ThemeContextType>(ThemeContext).theme
 
     return (
         <View style={styles.formContainer}>
             <Text style={[styles.label, { color: theme.text }]}>{label}</Text>
-            <TextInput value={value} onChangeText={onChangeText} style={[styles.textInput, { borderColor: theme.foam, color: theme.text }]} />
+            <TextInput
+                value={value}
+                onChangeText={onChangeText}
+                inputMode={type}
+                style={[
+                    styles.textInput,
+                    { borderColor: theme.foam, color: theme.text }
+                ]}
+            />
         </View>
     )
 }

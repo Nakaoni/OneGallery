@@ -1,5 +1,5 @@
 import { ScreenType } from "App"
-import { SetStateAction, createContext, useState } from "react"
+import { SetStateAction, createContext } from "react"
 
 export type RouterContextType = {
     route: string,

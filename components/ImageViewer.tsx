@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
         height: 440,
         borderWidth: 1,
         borderRadius: 10,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
 })

@@ -1,5 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemeContext, ThemeContextType } from "@contexts/ThemeContext";
 

@@ -1,4 +1,4 @@
-export type ColorType = {
+export type ThemeType = {
     name: string,
     base: string;
     surface: string;
@@ -18,7 +18,7 @@ export type ColorType = {
 }
 
 // Rose Pine Moon
-export const moon: ColorType = {
+export const moon: ThemeType = {
     name: 'moon',
     base: "#232136",
     surface: "#2a273f",
@@ -38,7 +38,7 @@ export const moon: ColorType = {
 }
 
 // Rose Pine Dawn
-export const dawn: ColorType = {
+export const dawn: ThemeType = {
     name: 'dawn',
     base: "#faf4ed",
     surface: "#fffaf3",

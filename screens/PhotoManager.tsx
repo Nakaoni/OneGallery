@@ -10,6 +10,7 @@ import Input from '@components/Input';
 import { captureRef } from 'react-native-view-shot';
 import * as FileSystem from 'expo-file-system';
 import { RouterContext, RouterContextType } from '@contexts/RouterContext';
+import { Constants } from '@global/constants';
 
 export default function PhotoManager() {
     const theme = useContext<ThemeContextType>(ThemeContext).theme
@@ -43,11 +44,12 @@ export default function PhotoManager() {
             const localUri = await captureRef(imageRef, {
                 height: 440,
                 quality: 1,
+                format: 'png',
             })
 
             await FileSystem.copyAsync({
                 from: localUri,
-                to: FileSystem.documentDirectory + photoName
+                to: Constants.IMAGE_FOLDER + photoName,
             })
 
             router.setRoute("photo-list")
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imagesContainer: {
-        flex: 1,
+        flex: 2 / 3,
         alignItems: 'center',
         justifyContent: 'center',
     },
