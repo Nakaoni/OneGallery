@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { RouterContext } from '@contexts/RouterContext';
 import PhotoList from '@screens/PhotoList';
 import { ThemeType, dawn, moon } from 'global/themes';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type IconThemeType = "dark-mode" | "light-mode"
 export type ScreenType = "photo-list" | "photo-manager"
@@ -23,29 +25,37 @@ export default function App() {
 
     return (
         <ThemeContext.Provider value={{ theme: theme }}>
-            <View style={[styles.menuContainer, { backgroundColor: theme.base }]}>
-                <View>
-                    <IconButton
-                        iconName={themeIcon}
-                        onPress={switchTheme}
-                    />
+            <GestureHandlerRootView style={{ flex: 1 }}>
+                <View style={[styles.menuContainer, { backgroundColor: theme.base }]}>
+                    <View>
+                        <IconButton
+                            iconName={themeIcon}
+                            onPress={switchTheme}
+                        />
+                    </View>
+                    <View style={styles.menuPhoto}>
+                        <IconButton
+                            iconName={"photo-library"}
+                            onPress={async () => {
+                                await AsyncStorage.removeItem('image')
+                                setScreen('photo-list')
+                            }}
+                        />
+                        <IconButton
+                            iconName={"add-photo-alternate"}
+                            onPress={async () => {
+                                await AsyncStorage.removeItem('image')
+                                setScreen('photo-manager')
+                            }}
+                        />
+                    </View>
                 </View>
-                <View style={styles.menuPhoto}>
-                    <IconButton
-                        iconName={"photo-library"}
-                        onPress={() => setScreen('photo-list')}
-                    />
-                    <IconButton
-                        iconName={"add-photo-alternate"}
-                        onPress={() => setScreen('photo-manager')}
-                    />
-                </View>
-            </View>
-            <RouterContext.Provider value={{ route: screen, setRoute: setScreen }}>
-                {screen === "photo-list" && <PhotoList />}
-                {screen === "photo-manager" && <PhotoManager />}
-            </RouterContext.Provider>
-            <StatusBar style="auto" />
+                <RouterContext.Provider value={{ route: screen, setRoute: setScreen }}>
+                    {screen === "photo-list" && <PhotoList />}
+                    {screen === "photo-manager" && <PhotoManager />}
+                </RouterContext.Provider>
+                <StatusBar style="auto" />
+            </GestureHandlerRootView>
         </ThemeContext.Provider >
     )
 }

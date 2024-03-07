@@ -21,6 +21,8 @@ export default function IconButton({ iconName, label, onPress }: IconButtonPropT
 }
 
 const styles = StyleSheet.create({
-    iconButton: {},
+    iconButton: {
+        alignItems: 'center',
+    },
     iconButtonLabel: {},
 })

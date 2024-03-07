@@ -6,10 +6,11 @@ import { ThemeContext, ThemeContextType } from "@contexts/ThemeContext";
 export type ButtonPropType = {
     label: string
     iconName?: keyof typeof MaterialIcons.glyphMap
-    onPress: () => void
+    onPress: () => void,
+    style?: {},
 }
 
-export default function Button({ label, iconName, onPress }: ButtonPropType) {
+export default function Button({ label, iconName, style, onPress }: ButtonPropType) {
     const theme = useContext<ThemeContextType>(ThemeContext).theme
 
     const viewStyle = iconName ? {
@@ -21,7 +22,7 @@ export default function Button({ label, iconName, onPress }: ButtonPropType) {
     const buttonStyle = iconName ? { backgroundColor: theme.overlay } : null
 
     return (
-        <View style={[styles.buttonContainer, viewStyle]}>
+        <View style={[styles.buttonContainer, viewStyle, style]}>
             <Pressable
                 onPress={onPress}
                 style={[styles.button, buttonStyle]}
