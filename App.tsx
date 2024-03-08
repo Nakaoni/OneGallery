@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { ThemeContext } from '@contexts/ThemeContext';
 import PhotoManager from '@screens/PhotoManager';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import IconButton from '@components/IconButton';
 import { useState } from 'react';
 import { RouterContext } from '@contexts/RouterContext';
@@ -12,6 +12,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type IconThemeType = "dark-mode" | "light-mode"
 export type ScreenType = "photo-list" | "photo-manager"
+
+const logo = require('./assets/logo.png')
 
 export default function App() {
     const [theme, setTheme] = useState<ThemeType>(moon)
@@ -27,11 +29,8 @@ export default function App() {
         <ThemeContext.Provider value={{ theme: theme }}>
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <View style={[styles.menuContainer, { backgroundColor: theme.base }]}>
-                    <View>
-                        <IconButton
-                            iconName={themeIcon}
-                            onPress={switchTheme}
-                        />
+                    <View style={styles.logoContainer}>
+                        <Image source={logo} style={styles.logo} />
                     </View>
                     <View style={styles.menuPhoto}>
                         <IconButton
@@ -47,6 +46,11 @@ export default function App() {
                                 await AsyncStorage.removeItem('image')
                                 setScreen('photo-manager')
                             }}
+                        />
+                        <Text style={{ verticalAlign: 'middle', color: theme.text }}>|</Text>
+                        <IconButton
+                            iconName={themeIcon}
+                            onPress={switchTheme}
                         />
                     </View>
                 </View>
@@ -74,5 +78,14 @@ const styles = StyleSheet.create({
     menuPhoto: {
         flexDirection: 'row',
         gap: 16,
-    }
+    },
+    logoContainer: {
+        width: 32,
+        height: 32,
+    },
+    logo: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain',
+    },
 });
