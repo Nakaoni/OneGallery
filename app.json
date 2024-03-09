@@ -1,18 +1,25 @@
 {
   "expo": {
     "name": "OneGallery",
-    "slug": "OneGallery",
+    "slug": "one-gallery",
     "splash": {
-        "image": "./assets/splash.png",
-        "backgroundColor": "#191724",
-        "resizeMode": "cover"
+      "image": "./assets/splash.png",
+      "backgroundColor": "#191724",
+      "resizeMode": "cover"
     },
-    "android":{
-        "icon": "./assets/icon.png",
-        "softwareKeyboardLayoutMode": "pan"
+    "android": {
+      "icon": "./assets/icon.png",
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "fr.nakaoni.onegallery"
     },
-    "ios":{
-        "icon": "./assets/icon.png"
-    }
+    "ios": {
+      "icon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "91b6244e-855b-436f-a00c-78974ab8488f"
+      }
+    },
+    "owner": "nakaoni"
   }
 }
