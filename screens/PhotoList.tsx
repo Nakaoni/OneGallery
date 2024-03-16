@@ -1,12 +1,16 @@
 import { ThemeContext } from "@contexts/ThemeContext"
 import { useContext, useEffect, useState } from "react"
-import { FlatList, StyleSheet, Text, View } from "react-native"
+import { FlatList, StyleSheet, View } from "react-native"
 import * as FileSystem from "expo-file-system"
 import { Constants } from "@global/constants"
 import ImagePreviewer from "@components/ImagePreviewer"
+import { RouterContext } from "@contexts/RouterContext"
+import IconButton from "@components/IconButton"
 
 export default function PhotoList() {
     const theme = useContext(ThemeContext).theme
+    const { setRoute } = useContext(RouterContext)
+
     const [images, setImages] = useState<string[]>([])
 
     useEffect(() => {
@@ -32,8 +36,8 @@ export default function PhotoList() {
 
     return (
         <View style={[styles.container, { backgroundColor: theme.base }]}>
-            {images.length <= 0 && <Text>List</Text>}
             <View style={styles.imageContainer}>
+                {images.length <= 0 && <IconButton iconName="add-a-photo" label="Add a photo" onPress={() => setRoute('photo-manager')} />}
                 {
                     images.length > 0 &&
                     <FlatList

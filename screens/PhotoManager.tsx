@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Image, ImageSourcePropType, ImageURISource, StyleSheet, Text, View } from 'react-native';
+import { ImageSourcePropType, ImageURISource, StyleSheet, Text, View } from 'react-native';
 import ImageViewer from '@components/ImageViewer';
 import Button from '@components/Button';
 import { ThemeContext, ThemeContextType } from '@contexts/ThemeContext';
