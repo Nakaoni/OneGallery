@@ -2,12 +2,17 @@
   "expo": {
     "name": "OneGallery",
     "slug": "one-gallery",
+    "owner": "nakaoni",
+    "privacy": "hidden",
+    "version": "1.1.0",
+    "orientation": "portrait",
     "splash": {
       "image": "./assets/splash.png",
       "backgroundColor": "#191724",
       "resizeMode": "cover"
     },
     "android": {
+      "versionCode": 110,
       "icon": "./assets/icon.png",
       "softwareKeyboardLayoutMode": "pan",
       "package": "fr.nakaoni.onegallery"
@@ -19,7 +24,6 @@
       "eas": {
         "projectId": "91b6244e-855b-436f-a00c-78974ab8488f"
       }
-    },
-    "owner": "nakaoni"
+    }
   }
 }
